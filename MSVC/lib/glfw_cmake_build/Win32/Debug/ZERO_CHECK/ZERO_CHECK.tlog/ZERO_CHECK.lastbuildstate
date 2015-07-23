@@ -1,0 +1,2 @@
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit
+Debug|Win32|E:\DOCS\00MyFiles\DevProjects\OpenGL\Templates\Template_OpenGL_GLFW\MSVC\lib\glfw_cmake_build\|

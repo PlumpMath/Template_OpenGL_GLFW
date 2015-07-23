@@ -13,32 +13,32 @@ void loadObject(void){
     std::vector< GLfloat > temp_uvs;
     std::vector< GLfloat > temp_normals;
 
-    FILE * file = NULL;
-    fopen_s(&file,"../../Resources/3DObject/cube.obj", "r");
-    if (file == NULL){
-        printf("Impossible to open the file !\n");
-        return;
-    }
+    //FILE * file = NULL;
+    //fopen_s(&file,"../../Resources/3DObject/cube.obj", "r");
+    //if (file == NULL){
+    //    printf("Impossible to open the file !\n");
+    //    return;
+    //}
 
-    while (1){
+    //while (1){
 
-        char lineHeader[128];
-        // read the first word of the line
-        int res = fscanf_s(file, "%s\n", lineHeader, sizeof(lineHeader));
-        if (res == EOF)
-            break; // EOF = End Of File. Quit the loop.
+    //    char lineHeader[128];
+    //    // read the first word of the line
+    //    int res = fscanf_s(file, "%s\n", lineHeader, sizeof(lineHeader));
+    //    if (res == EOF)
+    //        break; // EOF = End Of File. Quit the loop.
 
-        // else : parse lineHeader
+    //    // else : parse lineHeader
 
-        if (strcmp(lineHeader, "v") == 0){
-            GLfloat vertex_x, vertex_y, vertex_z;
-            fscanf_s(file, "%f %f %f\n", &vertex_x, &vertex_y, &vertex_z);
-            temp_vertices.push_back(vertex_x);
-            temp_vertices.push_back(vertex_y);
-            temp_vertices.push_back(vertex_z);
+    //    if (strcmp(lineHeader, "v") == 0){
+    //        GLfloat vertex_x, vertex_y, vertex_z;
+    //        fscanf_s(file, "%f %f %f\n", &vertex_x, &vertex_y, &vertex_z);
+    //        temp_vertices.push_back(vertex_x);
+    //        temp_vertices.push_back(vertex_y);
+    //        temp_vertices.push_back(vertex_z);
 
 
-        }
+    //    }
 
 
         //else if (strcmp(lineHeader, "vt") == 0){
@@ -53,18 +53,18 @@ void loadObject(void){
         //    temp_normals.push_back(normal);
 
         //}
-        else if (strcmp(lineHeader, "f") == 0){
-            std::string vertex1, vertex2, vertex3;
-            unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-            int matches = fscanf_s(file, "%d/%d %d/%d %d/%d\n", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
-            if (matches != 6){
-                printf("File can't be read by our simple parser : ( Try exporting with other options\n");
-                return;
-            }
-            vertexIndices.push_back(vertexIndex[0]);
-            vertexIndices.push_back(vertexIndex[1]);
-            vertexIndices.push_back(vertexIndex[2]);
-        }
+        //else if (strcmp(lineHeader, "f") == 0){
+        //    std::string vertex1, vertex2, vertex3;
+        //    unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+        //    int matches = fscanf_s(file, "%d/%d %d/%d %d/%d\n", &vertexIndex[0], &uvIndex[0], &vertexIndex[1], &uvIndex[1], &vertexIndex[2], &uvIndex[2]);
+        //    if (matches != 6){
+        //        printf("File can't be read by our simple parser : ( Try exporting with other options\n");
+        //        return;
+        //    }
+        //    vertexIndices.push_back(vertexIndex[0]);
+        //    vertexIndices.push_back(vertexIndex[1]);
+        //    vertexIndices.push_back(vertexIndex[2]);
+        //}
 
         //    uvIndices.push_back(uvIndex[0]);
         //    uvIndices.push_back(uvIndex[1]);
@@ -73,7 +73,7 @@ void loadObject(void){
         //    normalIndices.push_back(normalIndex[1]);
         //    normalIndices.push_back(normalIndex[2]);
         //}
-    }
+    //}
 
     glViewport(0, 0, 640, 480);
     glMatrixMode(GL_PROJECTION);
@@ -108,7 +108,7 @@ void loadObject(void){
     glVertexPointer(3, GL_FLOAT, 0, verts.data());
     glVertexPointer(3, GL_FLOAT, 0, temp_vertices.data());
     //glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
-    glTranslatef(0.0f, 0.0f, -1.5f);
+    //glTranslatef(0.0f, 0.0f, -1.5f);
     glDrawArrays(GL_TRIANGLES, 0, 8);
     //glDrawElements(GL_TRIANGLES, 0, GL_FLOAT, &vertexIndices[0]);
 }
@@ -137,8 +137,44 @@ int _tmain(int argc, _TCHAR* argv[])
     {
         /* Render here */
 
-        loadObject();
+        //loadObject();
 
+
+        glViewport(0, 0, 640, 480);
+        glMatrixMode(GL_PROJECTION);
+        //glScalef(1 / 200, 1 / 299, 1.0);
+
+        glMatrixMode(GL_MODELVIEW);
+        glEnable(GL_DEPTH_TEST);
+
+        glLoadIdentity();
+
+        glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glEnableClientState(GL_VERTEX_ARRAY);
+
+        GLfloat vertex[] = { 0.0, 0.0, 0.0,
+            0.0, 1.0, 0.0,
+            1.0, 1.0, 0.0,
+            0.0, 0.0, 0.0,
+            1.0, 1.0, 0.0,
+            1.0, 0.0, 0.0
+        };
+
+        std::vector <GLfloat> verts = { -1.0, -1.0, 0.0,
+            -1.0, 1.0, 0.0,
+            1.0, 1.0, 0.0,
+            -1.0, -1.0, 0.0,
+            1.0, 1.0, 0.0,
+            1.0, -1.0, 0.0
+        };
+
+        //glVertexPointer(3, GL_FLOAT, 0, verts.data());
+        glVertexPointer(3, GL_FLOAT, 0, &vertex[0]);
+        //glTranslatef(0.0f, 0.0f, -1.5f);
+        glDrawArrays(GL_TRIANGLES, 0, 8);
+        //glDrawElements(GL_TRIANGLES, 0, GL_FLOAT, &vertexIndices[0]);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
